@@ -10,4 +10,24 @@
 
 #define STEEM_HARDFORK_0_23_VERSION hardfork_version( 0, 23 )
 
+namespace hardfork23
+{
+
+inline static const std::set< std::string >& get_steemit_accounts()
+{
+   static const std::set< std::string > steemit_accounts
+   {
+    "steem",
+    "steemit",
+    "steemit2",
+    "steemit3",
+    "misterdelegation",
+    // TODO: add all known accounts
+    };
+
+   return steemit_accounts;
+}
+
+}
+
 #endif
