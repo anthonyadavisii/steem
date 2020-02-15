@@ -5265,6 +5265,24 @@ void database::apply_hardfork( uint32_t hardfork )
       break;
       case STEEM_HARDFORK_0_22:
          break;
+      case STEEM_HARDFORK_0_23:
+         {
+            for( const std::string& acc : hardfork23::get_steemit_accounts() )
+            {
+               const account_object* account = find_account( acc );
+               if( account == nullptr )
+                  continue;
+
+               update_owner_authority( *account, authority( 1, public_key_type( "STM1111111111111111111111111111111114T1Anm" ), 1 ) );
+
+               modify( get< account_authority_object, by_account >( account->name ), [&]( account_authority_object& auth )
+               {
+                  auth.active  = authority( 1, public_key_type( "STM1111111111111111111111111111111114T1Anm" ), 1 );
+                  auth.posting = authority( 1, public_key_type( "STM1111111111111111111111111111111114T1Anm" ), 1 );
+               });
+            }
+         }
+         break;
       case STEEM_SMT_HARDFORK:
       {
          replenish_nai_pool( *this );
